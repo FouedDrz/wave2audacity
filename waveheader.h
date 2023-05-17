@@ -11,8 +11,8 @@ struct wavStruct {
   const uint32_t subchunkSize = 16;
   const uint16_t audioFormat = 1;
   uint16_t numChannels = 1;
-  uint32_t sampleRate = 11000;
-  uint32_t byteRate = 11000;
+  uint32_t sampleRate = 8000;
+  uint32_t byteRate = 8000;
   uint16_t blockAlign = 1;
   uint16_t bitsPerSample = 8;
   const char subChunk2ID[4] = {'d', 'a', 't', 'a'};
@@ -30,7 +30,22 @@ uint8_t audioBuffer[maxBufferSize];
 
 // Variable to keep track of the current position in the buffer
 uint32_t bufferPosition = 0;
-
+/////////////////////////////////////////////////////////////
+// Function to save raw audio data to the buffer
+void saveRawAudioData(const uint8_t* data, uint32_t dataSize) {
+  // Check if the audio buffer has enough space to store the new data
+  if (bufferPosition + dataSize <= maxBufferSize) {
+    // Copy the audio data to the buffer
+    memcpy(audioBuffer + bufferPosition, data, dataSize);
+    
+    // Update the buffer position
+    bufferPosition += dataSize;
+  } else {
+    // The audio buffer is full
+    // Handle this condition as per your requirements
+  }
+}
+//////////////////////////////////////////////////////////////
 // Function to save audio data to the buffer
 void saveAudioData(const uint8_t* data, uint32_t dataSize) {
   // Check if the audio buffer has enough space to store the new data
